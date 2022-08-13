@@ -1,36 +1,43 @@
 <template>
-  Password:<input id="pass" type="password"><br><br>
-  <HomeFile v-on:key-is-pressed="write($event)"  />
+  Password:<input  id="pass" v-model="input"><br><br>
+  <HomeFile v-on:key-is-pressed="write($event)"/>
 </template>
 
 <script>
+ 
 import HomeFile from './HomeFile.vue'
 export default{
   name:'inputBox',
   components: {
     HomeFile
   },
-  methods:{
+  data(){
+    return{input:''}
+  },
+  methods:{    
     write(value){
-      let val=document.getElementById("pass").value;
-      if(value==='back'){
-        document.getElementById("pass").value=val.slice(0,-1);
-      }
-      else if(value==='clear'){
-         document.getElementById("pass").value='';
+      let val=this.input;
+      if(value==='clear'){
+         this.input='';
       }
       else if(value==='   space   '){
-         document.getElementById("pass").value+=" ";
+         this.input+=' ';
       }
-      else if(value==='caps'){
-        return value;
+      else if(value==='tab'){
+        this.input+='  ';
+      }
+      else if(value==='back'){
+        this.input=val.slice(0,-1);
+          
+      }
+      else if(value==='backtab'){
+        this.input=val.slice(0,-2);  
       }
       else{
-         document.getElementById("pass").value+=value;
+        this.input+=value;
       }
 
-      
-    }
+    },
   }
 }
 </script>
